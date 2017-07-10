@@ -1,0 +1,17 @@
+.body {
+	margin: 0;
+}
+
+.row div {
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+}
+
+.row div.active {
+	background-color: green;
+}
+
+.row div.inactive {
+	background-color: #99CCFF;
+}
