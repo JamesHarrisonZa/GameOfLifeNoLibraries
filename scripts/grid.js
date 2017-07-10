@@ -1,7 +1,7 @@
 'use strict';
 
-const _gridHeight = 100;
-const _gridWidth = 1000;
+const _gridHeight = 80;
+const _gridWidth = 200;
 let _cells = getStartingCells(_gridHeight, _gridWidth);
 
 function initialize() {
@@ -28,7 +28,8 @@ function createEmptyDivs(gridHeight, gridWidth) {
 function getStartingCells(gridHeight, gridWidth) {
 
 	let cells = new Array(gridHeight)
-		.fill(new Array(gridWidth)
+		.fill(null)
+		.map(_ => new Array(gridWidth)
 			.fill(null)
 			.map(_ => randomBinary())
 		);
