@@ -9,9 +9,9 @@
 }
 
 .row div.active {
-	background-color: green;
+	background-color: turquoise;
 }
 
 .row div.inactive {
-	background-color: #99CCFF;
+	background-color: black;
 }
