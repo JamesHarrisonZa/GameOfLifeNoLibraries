@@ -2,39 +2,47 @@
 
 const _gridHeight = 80;
 const _gridWidth = 200;
-let _cells = getStartingCells(_gridHeight, _gridWidth);
+const _refreshSeconds = 0.2;
+const _fillPercentage = 25;
+let _cells = getStartingCells();
 
 function initialize() {
 
-	const refreshSeconds = 1;
-	createEmptyDivs(_gridHeight, _gridWidth);
-	window.setInterval(updateGrid, refreshSeconds * 1000);
+	createEmptyDivs();
+	window.setInterval(updateGrid, _refreshSeconds * 1000);
 }
 
-function createEmptyDivs(gridHeight, gridWidth) {
+function createEmptyDivs() {
 
 	//Create row with x columns
-	for (let x = 0; x < gridWidth; x++) {
+	for (let x = 0; x < _gridWidth; x++) {
 		let colDiv = window.document.createElement('div');
 		window.document.querySelector('.row').appendChild(colDiv);
 	}
 
 	//duplicate y times. -1 because we started with 1 row
-	for (let y = 0; y < gridHeight - 1; y++) {
+	for (let y = 0; y < _gridHeight - 1; y++) {
 		duplicateRow();
 	}
 }
 
-function getStartingCells(gridHeight, gridWidth) {
-
-	let cells = new Array(gridHeight)
-		.fill(null)
-		.map(_ => new Array(gridWidth)
+function getStartingCells() {
+	
+	let cells = new Array(_gridHeight)
+		.fill(null) //Cant apply map on undefined elements, need to set to null first
+		.map((item, y) => new Array(_gridWidth)
 			.fill(null)
-			.map(_ => randomBinary())
+			.map((item, x) => {
+				return isInAreaToRandomise(y, x) ? randomBinary() : 0;
+			})
 		);
 
 	return cells;
+}
+
+function isInAreaToRandomise(y, x){
+
+	return y < _gridHeight*_fillPercentage/100 && x < _gridWidth*_fillPercentage/100;
 }
 
 function duplicateRow() {
@@ -49,7 +57,6 @@ function duplicateRow() {
 function updateGrid() {
 
 	_cells = getNextGeneration(_cells);
-
 	let allRows = document.querySelectorAll('.row');
 
 	for (let y = 0; y < _gridHeight; y++) {
@@ -60,8 +67,7 @@ function updateGrid() {
 
 			let colDiv = rowDiv.childNodes[x];
 			let cell = _cells[y][x];
-
-			setIsActive(colDiv, cell); //randomBinary() Change to pass in 1 or 0
+			setIsActive(colDiv, cell);
 		}
 	}
 }
