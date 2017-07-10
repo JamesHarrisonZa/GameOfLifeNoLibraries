@@ -1,8 +1,8 @@
 'use strict';
 
-const _gridHeight = 10;
-const _gridWidth = 10;
-let _cells = getStartingCells();
+const _gridHeight = 100;
+const _gridWidth = 1000;
+let _cells = getStartingCells(_gridHeight, _gridWidth);
 
 function initialize() {
 
@@ -25,21 +25,15 @@ function createEmptyDivs(gridHeight, gridWidth) {
 	}
 }
 
-function getStartingCells(){
+function getStartingCells(gridHeight, gridWidth) {
 
-	return [
-		[1,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,1,0],
-		[0,0,1,0,0,0,0,1,0,0],
-		[0,0,0,1,0,0,1,0,0,0],
-		[0,0,0,0,1,1,0,0,0,0],
-		[0,0,0,0,1,1,0,0,0,0],
-		[0,0,0,1,0,0,1,0,0,0],
-		[0,0,1,0,0,0,0,1,0,0],
-		[0,1,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,1]
-	];
+	let cells = new Array(gridHeight)
+		.fill(new Array(gridWidth)
+			.fill(null)
+			.map(_ => randomBinary())
+		);
 
+	return cells;
 }
 
 function duplicateRow() {
@@ -57,11 +51,11 @@ function updateGrid() {
 
 	let allRows = document.querySelectorAll('.row');
 
-	for(let y = 0; y < _gridHeight; y++){
+	for (let y = 0; y < _gridHeight; y++) {
 
 		var rowDiv = allRows[y];
 
-		for(let x = 0; x < _gridWidth; x++){
+		for (let x = 0; x < _gridWidth; x++) {
 
 			let colDiv = rowDiv.childNodes[x];
 			let cell = _cells[y][x];
@@ -81,7 +75,6 @@ function setIsActive(cellDiv, isActive) {
 	}
 }
 
-//ToDo: Take out after playing
 function randomBinary() {
 	let max = 1
 	let min = 0
