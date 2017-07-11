@@ -1,18 +1,6 @@
 'use strict';
 
-const _refreshSeconds = 0.2;
-const _fillPercentage = 25;
-const _gridHeight = getGridHeight();
-const _gridWidth = getGridWidth();
-let _cells = getStartingCells();
-
-function initialize() {
-
-	createEmptyDivs();
-	window.setInterval(updateGrid, _refreshSeconds * 1000);
-}
-
-function createEmptyDivs() {
+let createEmptyDivs = () => {
 
 	//Create row with x columns
 	for (let x = 0; x < _gridWidth; x++) {
@@ -27,26 +15,26 @@ function createEmptyDivs() {
 	}
 }
 
-function getGridHeight() {
+let getGridHeight = () => {
 
 	const viewPortHeigth = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 	return getGridCellUnits(viewPortHeigth);
 }
 
-function getGridWidth() {
+let getGridWidth = () => {
 
 	const viewPortWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	return getGridCellUnits(viewPortWidth);
 }
 
-function getGridCellUnits(viewPortSize) {
+let getGridCellUnits = (viewPortSize) => {
 
 	const cellHeight = 10;
 	const extraMargin = 2;
 	return Math.floor(viewPortSize / cellHeight) - extraMargin;
 }
 
-function getStartingCells() {
+let getStartingCells = () => {
 
 	let cells = new Array(_gridHeight)
 		.fill(null) //Cant apply map on undefined elements, need to set to null first
@@ -60,12 +48,12 @@ function getStartingCells() {
 	return cells;
 }
 
-function isInAreaToRandomise(y, x) {
+let isInAreaToRandomise = (y, x) => {
 
 	return y < _gridHeight * _fillPercentage / 100 && x < _gridWidth * _fillPercentage / 100;
 }
 
-function duplicateRow() {
+let duplicateRow = () => {
 	let allRows = document.querySelectorAll('.row');
 	let lastRow = allRows[allRows.length - 1];
 	let clone = lastRow.cloneNode(true);
@@ -74,7 +62,7 @@ function duplicateRow() {
 		.appendChild(clone);
 }
 
-function updateGrid() {
+let updateGrid = () => {
 
 	_cells = getNextGeneration(_cells);
 	const allRows = document.querySelectorAll('.row');
@@ -87,20 +75,20 @@ function updateGrid() {
 
 			const colDiv = rowDiv.childNodes[x];
 			const cell = _cells[y][x];
-			
-			if(cellNeedsUpdating(colDiv, cell)){
+
+			if (cellNeedsUpdating(colDiv, cell)) {
 				setIsActive(colDiv, cell);
 			}
 		}
 	}
 }
 
-function cellNeedsUpdating(colDiv, cell){
+let cellNeedsUpdating = (colDiv, cell) => {
 
 	return (colDiv.classList[0] === 'inactive' && cell === 1) || (colDiv.classList[0] === 'active' && cell === 0);
 }
 
-function setIsActive(cellDiv, isActive) {
+let setIsActive = (cellDiv, isActive) => {
 	if (!!isActive) {
 		cellDiv.classList.remove('inactive', 'animated', 'fadeOut');
 		cellDiv.classList.add('active', 'animated', 'fadeIn');
@@ -110,10 +98,8 @@ function setIsActive(cellDiv, isActive) {
 	}
 }
 
-function randomBinary() {
+let randomBinary = () => {
 	let max = 1;
 	let min = 0;
 	return Math.floor(Math.random() * (max - min + 1));
 }
-
-initialize();
