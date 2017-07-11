@@ -17,6 +17,7 @@ function createEmptyDivs() {
 	//Create row with x columns
 	for (let x = 0; x < _gridWidth; x++) {
 		let colDiv = window.document.createElement('div');
+		colDiv.classList.add('inactive');
 		window.document.querySelector('.row').appendChild(colDiv);
 	}
 
@@ -26,27 +27,27 @@ function createEmptyDivs() {
 	}
 }
 
-function getGridHeight(){
+function getGridHeight() {
 
 	const viewPortHeigth = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 	return getGridCellUnits(viewPortHeigth);
 }
 
-function getGridWidth(){
+function getGridWidth() {
 
 	const viewPortWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	return getGridCellUnits(viewPortWidth);
 }
 
-function getGridCellUnits(viewPortSize){
+function getGridCellUnits(viewPortSize) {
 
 	const cellHeight = 10;
 	const extraMargin = 2;
-	return Math.floor(viewPortSize/cellHeight)-extraMargin;
+	return Math.floor(viewPortSize / cellHeight) - extraMargin;
 }
 
 function getStartingCells() {
-	
+
 	let cells = new Array(_gridHeight)
 		.fill(null) //Cant apply map on undefined elements, need to set to null first
 		.map((item, y) => new Array(_gridWidth)
@@ -59,9 +60,9 @@ function getStartingCells() {
 	return cells;
 }
 
-function isInAreaToRandomise(y, x){
+function isInAreaToRandomise(y, x) {
 
-	return y < _gridHeight*_fillPercentage/100 && x < _gridWidth*_fillPercentage/100;
+	return y < _gridHeight * _fillPercentage / 100 && x < _gridWidth * _fillPercentage / 100;
 }
 
 function duplicateRow() {
@@ -76,37 +77,43 @@ function duplicateRow() {
 function updateGrid() {
 
 	_cells = getNextGeneration(_cells);
-	let allRows = document.querySelectorAll('.row');
+	const allRows = document.querySelectorAll('.row');
 
 	for (let y = 0; y < _gridHeight; y++) {
 
-		var rowDiv = allRows[y];
+		const rowDiv = allRows[y];
 
 		for (let x = 0; x < _gridWidth; x++) {
 
-			let colDiv = rowDiv.childNodes[x];
-			let cell = _cells[y][x];
-			setIsActive(colDiv, cell);
+			const colDiv = rowDiv.childNodes[x];
+			const cell = _cells[y][x];
+			
+			if(cellNeedsUpdating(colDiv, cell)){
+				setIsActive(colDiv, cell);
+			}
 		}
 	}
 }
 
+function cellNeedsUpdating(colDiv, cell){
+
+	return (colDiv.classList[0] === 'inactive' && cell === 1) || (colDiv.classList[0] === 'active' && cell === 0);
+}
+
 function setIsActive(cellDiv, isActive) {
-	if (isActive) {
-		cellDiv.classList.remove('inactive')
-		cellDiv.classList.add('active')
+	if (!!isActive) {
+		cellDiv.classList.remove('inactive', 'animated', 'fadeOut');
+		cellDiv.classList.add('active', 'animated', 'fadeIn');
 	} else {
-		cellDiv.classList.remove('active')
-		cellDiv.classList.add('inactive')
+		cellDiv.classList.remove('active', 'animated', 'fadeIn');
+		cellDiv.classList.add('inactive', 'animated', 'fadeOut');
 	}
 }
 
 function randomBinary() {
-	let max = 1
-	let min = 0
-	return Math.floor(
-		Math.random() * (max - min + 1)
-	)
+	let max = 1;
+	let min = 0;
+	return Math.floor(Math.random() * (max - min + 1));
 }
 
 initialize();
