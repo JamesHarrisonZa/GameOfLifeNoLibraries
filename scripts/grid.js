@@ -1,9 +1,9 @@
 'use strict';
 
-const _gridHeight = 80;
-const _gridWidth = 200;
 const _refreshSeconds = 0.2;
 const _fillPercentage = 25;
+const _gridHeight = getGridHeight();
+const _gridWidth = getGridWidth();
 let _cells = getStartingCells();
 
 function initialize() {
@@ -24,6 +24,25 @@ function createEmptyDivs() {
 	for (let y = 0; y < _gridHeight - 1; y++) {
 		duplicateRow();
 	}
+}
+
+function getGridHeight(){
+
+	const viewPortHeigth = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	return getGridCellUnits(viewPortHeigth);
+}
+
+function getGridWidth(){
+
+	const viewPortWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	return getGridCellUnits(viewPortWidth);
+}
+
+function getGridCellUnits(viewPortSize){
+
+	const cellHeight = 10;
+	const extraMargin = 2;
+	return Math.floor(viewPortSize/cellHeight)-extraMargin;
 }
 
 function getStartingCells() {
