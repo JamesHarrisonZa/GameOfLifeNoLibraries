@@ -1,10 +1,8 @@
 'use strict';
 
-var gameOfLife = () => {
+let gameOfLife = function(){
 
-	var getCell = (cells, r, c) => { return (cells[r] && cells[r][c]) | 0; }
-
-	var getNextGeneration = (cells) => {
+	let getNextGeneration = (cells) => {
 
 		return cells.map((row, r) => {
 			return row.map((isAlive, c) => {
@@ -18,6 +16,8 @@ var gameOfLife = () => {
 			});
 		});
 	}
+
+	let getCell = (cells, r, c) => { return (cells[r] && cells[r][c]) | 0; }
 
 	return {
 		getNextGeneration: getNextGeneration
