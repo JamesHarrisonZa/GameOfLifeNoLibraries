@@ -1,10 +1,10 @@
 'use strict';
 
-let grid = function(gridHeight, gridWidth, cells) {
+let grid = function(startingCells) {
 
-	this._gridHeight = gridHeight;
-	this._gridWidth = gridWidth;
-	this._cells = cells;
+	this._gridHeight = startingCells.cellsHeight;
+	this._gridWidth = startingCells.cellsWidth;
+	this._cells = startingCells.cells;
 	this._gameOfLife = new gameOfLife();
 
 	// public methods
