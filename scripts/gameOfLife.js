@@ -1,18 +1,25 @@
 'use strict';
 
-var getNextGeneration = (cells) => {
+var gameOfLife = () => {
 
 	var getCell = (cells, r, c) => { return (cells[r] && cells[r][c]) | 0; }
 
-	return cells.map((row, r) => {
-		return row.map((isAlive, c) => {
+	var getNextGeneration = (cells) => {
 
-			const neighbours =
-				getCell(cells, r - 1, c - 1) + getCell(cells, r - 1, c) + getCell(cells, r - 1, c + 1) +
-				getCell(cells, r, c - 1) 						        + getCell(cells, r, c + 1) +
-				getCell(cells, r + 1, c - 1) + getCell(cells, r + 1, c) + getCell(cells, r + 1, c + 1)
+		return cells.map((row, r) => {
+			return row.map((isAlive, c) => {
 
-			return (neighbours === 3 || (neighbours === 2 && isAlive)) | 0;
+				const neighbours =
+					getCell(cells, r - 1, c - 1) + getCell(cells, r - 1, c) + getCell(cells, r - 1, c + 1) +
+					getCell(cells, r, c - 1) + getCell(cells, r, c + 1) +
+					getCell(cells, r + 1, c - 1) + getCell(cells, r + 1, c) + getCell(cells, r + 1, c + 1)
+
+				return (neighbours === 3 || (neighbours === 2 && isAlive)) | 0;
+			});
 		});
-	});
+	}
+
+	return {
+		getNextGeneration: getNextGeneration
+	};
 }

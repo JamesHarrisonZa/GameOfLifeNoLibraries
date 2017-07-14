@@ -64,7 +64,7 @@ let duplicateRow = () => {
 
 let updateGrid = () => {
 
-	_cells = getNextGeneration(_cells);
+	_cells = gameOfLife().getNextGeneration(_cells);
 	const allRows = document.querySelectorAll('.row');
 
 	for (let y = 0; y < _gridHeight; y++) {
