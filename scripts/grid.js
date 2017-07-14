@@ -63,11 +63,11 @@ let grid = function(startingCells) {
 
 	let setIsActive = (cellDiv, isActive) => {
 		if (!!isActive) {
-			cellDiv.classList.remove('inactive', 'animated', 'fadeOut');
-			cellDiv.classList.add('active', 'animated', 'fadeIn');
+			cellDiv.classList.remove('inactive'); //, 'animated', 'fadeOut'
+			cellDiv.classList.add('active'); //, 'animated', 'fadeIn'
 		} else {
-			cellDiv.classList.remove('active', 'animated', 'fadeIn');
-			cellDiv.classList.add('inactive', 'animated', 'fadeOut');
+			cellDiv.classList.remove('active');
+			cellDiv.classList.add('inactive');
 		}
 	}
 
