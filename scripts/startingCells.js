@@ -1,3 +1,5 @@
+'use strict';
+
 let startingCells = function () {
 
 	const _fillPercentage = 40; //Disable animations if you want to fill more

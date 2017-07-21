@@ -1,3 +1,5 @@
+'use strict';
+
 const _refreshSeconds = 0.2;
 
 let initialize = () => {
