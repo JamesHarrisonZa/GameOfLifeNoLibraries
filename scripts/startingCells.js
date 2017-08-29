@@ -21,8 +21,9 @@ let startingCells = function () {
 
 	let getCellsWidth = () => {
 
+		const windowMargin = 2;
 		const viewPortWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-		return getCellUnits(viewPortWidth);
+		return getCellUnits(viewPortWidth) - windowMargin;
 	}
 
 	let getStartingCells = (gridHeight, gridWidth) => {
